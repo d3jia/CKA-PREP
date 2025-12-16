@@ -13,6 +13,7 @@ Each question has its own folder named `Question-X` (where X is the question num
 - `Question.bash` — The question text and a link to the associated video.
 - `LabSetUp.bash` — Executable bash script to prepare the Killercoda lab environment.
 - `SolutionNotes.bash` — Supplemental notes and hints to reach the solution.
+- `validate.sh` - Shell script to validate your exam in the test environment.
 
 ## How to use in Killercoda
 1. Open the CKA playground: https://killercoda.com/playgrounds/scenario/cka
@@ -34,6 +35,13 @@ Each question has its own folder named `Question-X` (where X is the question num
 
 ## Questions
 Each `Question-X` folder contains the lab task under `Question.bash` which includes a link to the corresponding youtube video. Note that the lab files may intentionally vary in names, namespaces, or resource identifiers compared to the video — this is to align more closely with typical exam phrasing. Always treat the question text in the repo as the authoritative task.
+
+## Validate Your Answers
+Once you have completed solving the question, use the validate.sh script in each folder to valdate against your solutions in the test environment. To run the script
+```bash
+chmod +x validate.sh
+./validate.sh
+```
 
 ## Solution Notes
 Solution notes provide supplemental guidance and encourage exam-appropriate approaches (for example, preferring `kubectl patch` over `kubectl edit` when applicable). They are not the only way to reach a solution but can be helpful if you get stuck.
