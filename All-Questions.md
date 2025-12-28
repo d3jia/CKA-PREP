@@ -1,21 +1,24 @@
-# CKA Exam – Corrected, Exam‑Safe Master Notes (Reworked)
+# CKA Exam – Corrected Master Notes (Q&A Format, Exam‑Safe)
 
-This document is a **clean, verified rewrite** of the original MD. Every section below is:
-- syntactically valid
-- aligned with Kubernetes/Helm behavior
-- exam‑safe (no chart‑specific traps unless unavoidable)
+This document preserves the **original question context** and provides **fully corrected, exam‑safe solutions**.
 
-If something is ambiguous in the exam, the **safest deterministic approach** is documented.
+Use this exactly like a revision sheet: **read question → expand solution → rehearse commands**.
 
 ---
 
-## 1. Argo CD – Helm Template (CRDs already installed)
+## Q1 – Argo CD via Helm (CRDs already installed)
 
-### Goal
-- Render manifests for Argo CD **without installing CRDs**
-- Save output to a file
+**Question**
 
-### Correct, exam‑safe solution
+Install Argo CD using Helm. CRDs are already installed in the cluster and must **NOT** be installed again.
+
+Tasks:
+1. Add the Argo CD Helm repository
+2. Generate Helm manifests for version `7.7.3`
+3. Save output to a file
+
+<details>
+<summary><strong>Correct Solution (Exam‑Safe)</strong></summary>
 
 ```bash
 helm repo add argo https://argoproj.github.io/argo-helm
@@ -28,26 +31,28 @@ helm template argocd argo/argo-cd \
   > /root/argo-helm.yaml
 ```
 
-### Why this is correct
-- `--skip-crds` is a **Helm guarantee** (not chart‑specific)
-- No reliance on `values.yaml` internals
-- Output will never contain `CustomResourceDefinition`
+**Why this is correct**
+- `--skip-crds` is a Helm‑level guarantee (not chart‑specific)
+- No dependency on `values.yaml`
+- Deterministic grading behavior
 
-Verification:
+Verify:
 ```bash
 grep -i CustomResourceDefinition /root/argo-helm.yaml
-# expect: no output
+# expect no output
 ```
+</details>
 
 ---
 
-## 2. Sidecar Container with Shared Volume
+## Q2 – Sidecar Container with Shared Volume
 
-### Goal
-- Add sidecar container
-- Share logs via a common volume
+**Question**
 
-### Correct pattern
+Update an existing Deployment to add a sidecar container that tails logs written by the main container. Both containers must share a volume.
+
+<details>
+<summary><strong>Correct Solution</strong></summary>
 
 ```yaml
 spec:
@@ -72,20 +77,26 @@ spec:
           mountPath: /var/log
 ```
 
-### Rules
-- `volumeMounts.name` **must match** `volumes.name`
-- Sidecar is a **normal container**, not an initContainer
+**Key rules**
+- Sidecar is a **normal container**, not initContainer
+- `volumeMounts.name` must match `volumes.name`
+</details>
 
 ---
 
-## 3. Gateway API – Replace Existing Ingress
+## Q3 – Gateway API Migration (Replace Ingress)
 
-### Goal
-- Replace Ingress with Gateway + HTTPRoute
-- Preserve TLS + routing
+**Question**
 
-### Gateway (TLS termination)
+Migrate an existing Ingress to the Gateway API while preserving:
+- TLS termination
+- Hostname
+- Routing rules
 
+<details>
+<summary><strong>Correct Solution</strong></summary>
+
+### Gateway
 ```yaml
 apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
@@ -106,8 +117,7 @@ spec:
         name: web-tls
 ```
 
-### HTTPRoute (routing)
-
+### HTTPRoute
 ```yaml
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
@@ -129,22 +139,24 @@ spec:
       port: 80
 ```
 
-### Common failure points
-- Missing `metadata.namespace`
-- Invalid port values
-- Forgetting TLS `mode: Terminate`
+**Common traps avoided**
+- Missing namespace
+- Invalid port value
+- Missing `tls.mode: Terminate`
+</details>
 
 ---
 
-## 4. Resource Requests & Limits (CPU / Memory)
+## Q4 – Resource Requests & Limits
 
-### Strategy
-1. Check allocatable resources on node
-2. Subtract current system usage
-3. Reserve ~10% headroom
-4. Divide evenly across replicas
+**Question**
 
-### Apply to **all containers and initContainers**
+Adjust CPU and memory requests/limits so that multiple replicas run stably without exhausting the node.
+
+<details>
+<summary><strong>Correct Solution</strong></summary>
+
+Apply to **all containers and initContainers**:
 
 ```yaml
 resources:
@@ -156,12 +168,25 @@ resources:
     memory: 600Mi
 ```
 
+**Method**
+1. Check allocatable resources
+2. Subtract system usage
+3. Reserve ~10% headroom
+4. Divide evenly
+</details>
+
 ---
 
-## 5. StorageClass – Default Handling
+## Q5 – StorageClass Default Handling
 
-### Create SC (not default)
+**Question**
 
+Create a StorageClass, then make it the default while ensuring it is the **only** default StorageClass.
+
+<details>
+<summary><strong>Correct Solution</strong></summary>
+
+Create:
 ```yaml
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
@@ -173,25 +198,29 @@ provisioner: rancher.io/local-path
 volumeBindingMode: WaitForFirstConsumer
 ```
 
-### Patch to default
-
+Patch to default:
 ```bash
 kubectl patch sc local-storage \
   -p '{"metadata":{"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
 ```
 
-### Remove other defaults
-
+Remove other defaults:
 ```bash
 kubectl patch sc local-path \
   -p '{"metadata":{"annotations":{"storageclass.kubernetes.io/is-default-class":"false"}}}'
 ```
+</details>
 
 ---
 
-## 6. PriorityClass
+## Q6 – PriorityClass
 
-### Create
+**Question**
+
+Create a PriorityClass and apply it to an existing workload.
+
+<details>
+<summary><strong>Correct Solution</strong></summary>
 
 ```bash
 kubectl create priorityclass high-priority \
@@ -199,16 +228,22 @@ kubectl create priorityclass high-priority \
   --description="high priority"
 ```
 
-### Patch deployment
-
 ```bash
 kubectl -n priority patch deploy busybox-logger \
   -p '{"spec":{"template":{"spec":{"priorityClassName":"high-priority"}}}}'
 ```
+</details>
 
 ---
 
-## 7. Ingress (Classic)
+## Q7 – Ingress (Classic)
+
+**Question**
+
+Expose a Service via Ingress using a host and path.
+
+<details>
+<summary><strong>Correct Solution</strong></summary>
 
 ```yaml
 apiVersion: networking.k8s.io/v1
@@ -229,19 +264,35 @@ spec:
             port:
               number: 8080
 ```
+</details>
 
 ---
 
-## 8. CRDs – Listing & Explain
+## Q8 – CRDs Inspection
+
+**Question**
+
+List CRDs and extract schema documentation.
+
+<details>
+<summary><strong>Correct Solution</strong></summary>
 
 ```bash
 kubectl get crd | grep cert-manager > /root/resources.yaml
 kubectl explain certificate.spec.subject > /root/subject.yaml
 ```
+</details>
 
 ---
 
-## 9. NetworkPolicy – Least Permissive
+## Q9 – NetworkPolicy (Least Permissive)
+
+**Question**
+
+Allow traffic from frontend namespace to backend namespace only.
+
+<details>
+<summary><strong>Correct Solution</strong></summary>
 
 ```yaml
 apiVersion: networking.k8s.io/v1
@@ -260,10 +311,18 @@ spec:
     - port: 80
       protocol: TCP
 ```
+</details>
 
 ---
 
-## 10. HPA (autoscaling/v2)
+## Q10 – Horizontal Pod Autoscaler
+
+**Question**
+
+Create an HPA that scales based on CPU utilization.
+
+<details>
+<summary><strong>Correct Solution</strong></summary>
 
 ```yaml
 apiVersion: autoscaling/v2
@@ -289,18 +348,34 @@ spec:
     scaleDown:
       stabilizationWindowSeconds: 30
 ```
+</details>
 
 ---
 
-## 11. CNI (NetworkPolicy required)
+## Q11 – CNI with NetworkPolicy Support
+
+**Question**
+
+Install a CNI that supports NetworkPolicy.
+
+<details>
+<summary><strong>Correct Solution</strong></summary>
 
 ```bash
 kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.28.2/manifests/tigera-operator.yaml
 ```
+</details>
 
 ---
 
-## 12. PV Reuse (Retain)
+## Q12 – PersistentVolume Reuse (Retain)
+
+**Question**
+
+Rebind a retained PV to a new PVC.
+
+<details>
+<summary><strong>Correct Solution</strong></summary>
 
 ```yaml
 apiVersion: v1
@@ -316,10 +391,18 @@ spec:
       storage: 250Mi
   storageClassName: ""
 ```
+</details>
 
 ---
 
-## 13. cri-dockerd
+## Q13 – cri‑dockerd Setup
+
+**Question**
+
+Install and enable cri‑dockerd with required sysctl settings.
+
+<details>
+<summary><strong>Correct Solution</strong></summary>
 
 ```bash
 sudo dpkg -i cri-dockerd_*.deb
@@ -338,22 +421,37 @@ Apply:
 ```bash
 sudo sysctl --system
 ```
+</details>
 
 ---
 
-## 14. kube-apiserver etcd port fix
+## Q14 – kube‑apiserver etcd Port Fix
+
+**Question**
+
+Fix kube‑apiserver failing due to wrong etcd port.
+
+<details>
+<summary><strong>Correct Solution</strong></summary>
 
 - Correct port: **2379**
-- Wrong port: 2380 (peer)
+- Wrong port: 2380
 
-Edit:
 ```bash
 vim /etc/kubernetes/manifests/kube-apiserver.yaml
 ```
+</details>
 
 ---
 
-## 15. Taints & Tolerations
+## Q15 – Taints & Tolerations
+
+**Question**
+
+Prevent scheduling on a node except for tolerated pods.
+
+<details>
+<summary><strong>Correct Solution</strong></summary>
 
 ```bash
 kubectl taint node node01 PERMISSION=granted:NoSchedule
@@ -366,23 +464,34 @@ tolerations:
   value: granted
   effect: NoSchedule
 ```
+</details>
 
 ---
 
-## 16. /etc/hosts (safe method)
+## Q16 – /etc/hosts Modification
+
+**Question**
+
+Add service IP to `/etc/hosts`.
+
+<details>
+<summary><strong>Correct Solution</strong></summary>
 
 ```bash
 echo "x.x.x.x ckaquestion.k8s.local" | sudo tee -a /etc/hosts
 ```
+</details>
 
 ---
 
-# Final Rule for Exam
+### Final Exam Rule
 
 If a solution:
-- contains typos
-- relies on chart internals
 - cannot be dry‑run validated
+- relies on chart internals
+- contains silent YAML or shell traps
 
-**Do not trust it.** Use this document as your ground truth.
+**do not use it.**
+
+This document is now safe to memorize and execute under exam pressure.
 
