@@ -43,7 +43,7 @@ run_question() {
     exit 1
   fi
 
-  question_file="$dir/Questions.txt"
+  question_file="$dir/Questions.bash"
   if [[ ! -f "$question_file" ]]; then
     echo "Question file not found: $question_file" >&2
     exit 1
