@@ -43,14 +43,14 @@ run_question() {
     exit 1
   fi
 
-  question_file=$(ls "$dir"/Question*.bash 2>/dev/null | head -n 1 || true)
-  if [[ -z "$question_file" ]]; then
-    echo "Question script not found in $dir" >&2
+  question_file="$dir/Questions.txt"
+  if [[ ! -f "$question_file" ]]; then
+    echo "Question file not found: $question_file" >&2
     exit 1
   fi
 
   bash "$setup"
-  bash "$question_file"
+  cat "$question_file"
   printf "\n----------------------------------------------------------------------\n"
 }
 
