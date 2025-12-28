@@ -8,17 +8,19 @@ Use this exactly like a revision sheet: **read question → expand solution → 
 
 ## Q1 – Argo CD via Helm (CRDs already installed)
 
-**Question**
+**Question (verbatim context preserved)**
 
-Install Argo CD using Helm. CRDs are already installed in the cluster and must **NOT** be installed again.
+Install **Argo CD** in a Kubernetes cluster using **Helm** while ensuring that **CRDs are NOT installed** (CRDs are already pre-installed).
 
-Tasks:
-1. Add the Argo CD Helm repository
-2. Generate Helm manifests for version `7.7.3`
-3. Save output to a file
+**Tasks:**
+1. Add the official Argo CD Helm repository with the name **`argo`**.
+2. Generate a Helm template from the Argo CD chart **version `7.7.3`** for the **`argocd` namespace**.
+3. Ensure that **CRDs are not installed** by configuring Helm accordingly.
+4. **Save the generated YAML manifest to `/root/argo-helm.yaml`.**
+5. (If required by the challenge) Apply or install the manifest.
 
 <details>
-<summary><strong>Correct Solution (Exam‑Safe)</strong></summary>
+<summary><strong>Correct Solution (Exam-Safe)</strong></summary>
 
 ```bash
 helm repo add argo https://argoproj.github.io/argo-helm
@@ -32,14 +34,14 @@ helm template argocd argo/argo-cd \
 ```
 
 **Why this is correct**
-- `--skip-crds` is a Helm‑level guarantee (not chart‑specific)
-- No dependency on `values.yaml`
-- Deterministic grading behavior
+- Uses **Helm-native `--skip-crds`** (deterministic, chart-agnostic).
+- Matches the **exact output path** required by the question.
 
-Verify:
+**Validation**
 ```bash
+test -f /root/argo-helm.yaml
 grep -i CustomResourceDefinition /root/argo-helm.yaml
-# expect no output
+# expect: no output
 ```
 </details>
 
