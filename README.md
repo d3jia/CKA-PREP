@@ -56,3 +56,7 @@ Q17. TLS Config
 
 - Solution & Explanation: https://github.com/d3jia/CKA-PREP/blob/main/All-Questions.md
 - Youtube Video: https://www.youtube.com/watch?v=-rs3AoAVyXE&list=PLkDZsCgo3Isr4NB5cmyqG7OZwYEx5XOjM&index=3
+
+---
+
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/d3jia)
