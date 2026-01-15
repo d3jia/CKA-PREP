@@ -55,4 +55,12 @@ git clone https://github.com/d3jia/CKA-PRE && cd CKA-PREP
 
 # That's all
 
+If you want to use custom Alias / Vimrc settings like mine in Bare/Temp environemnts, try this copypasta! 😍
+
+```sh
+curl -fsSL https://gist.githubusercontent.com/d3jia/d6851329a05f36f9e72a9e92bc6aecea/raw/ccfe50441bf4ade776bb8f539f55f0f062892872/d3jia_devex_setup.sh -o /tmp/devex.sh \
+  && bash /tmp/devex.sh \
+  && source ~/.bashrc
+```
+
 [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/d3jia)
