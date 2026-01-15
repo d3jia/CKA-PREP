@@ -3,26 +3,26 @@ set -euo pipefail
 
 print_menu() {
   cat <<'MENU'
-[CKA MOCK EXAM] Please Reply 1~17 to initialise the Question.
+[CKA MOCK EXAM] Please Reply 1~17 to initialise the Question
 ----------------------------------------------------------------------
-Q1. ArgoCD Helm
-Q2. SideCar
-Q3. Gateway API Migration
-Q4. WordPress Resources
-Q5. Storage Class
-Q6. Priority Class
-Q7. Ingress Echo
-Q8. CRDs
-Q9. Network Policy
-Q10. HPA
-Q11. CNI Install
-Q12. MariaDB Restore
-Q13. CRI-Dockerd
-Q14. Kube-apiserver Fix
-Q15. Taints & Tolerations
-Q16. NodePort Service
-Q17. TLS Config
-[X] Exit
+ [1] ArgoCD Helm
+ [2] SideCar
+ [3] Gateway API Migration
+ [4] WordPress Resources
+ [5] Storage Class
+ [6] Priority Class
+ [7] Ingress Echo
+ [8] CRDs
+ [9] Network Policy
+[10] HPA
+[11] CNI Install
+[12] MariaDB Restore
+[13] CRI-Dockerd
+[14] Kube-apiserver Fix
+[15] Taints & Tolerations
+[16] NodePort Service
+[17] TLS Config
+ [X] Exit
 ----------------------------------------------------------------------
 MENU
 }
