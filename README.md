@@ -53,7 +53,7 @@ git clone https://github.com/d3jia/CKA-PRE && cd CKA-PREP
 - Solution & Explanation: [CKA-PREP/All-Questions.md](https://github.com/d3jia/CKA-PREP/blob/main/All-Questions.md) 
 - Video Explanation: [IT KIddie Playlist](https://www.youtube.com/watch?v=-rs3AoAVyXE&list=PLkDZsCgo3Isr4NB5cmyqG7OZwYEx5XOjM&index=3)
 
-# That's all
+# Optional QoL
 
 If you want to use custom Alias / Vimrc settings like mine in Bare/Temp environemnts, try this copypasta! 😍
 
@@ -63,4 +63,9 @@ curl -fsSL https://gist.githubusercontent.com/d3jia/d6851329a05f36f9e72a9e92bc6a
   && source ~/.bashrc
 ```
 
+# That's all
+
+
 [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/d3jia)
+
+
