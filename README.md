@@ -1,6 +1,6 @@
 # CKA-PREP
 
-Customized CLI Menu, an effort to streamline the practice experience for CKA Mock Exam Questions.
+Customized CLI Menu, streamlined the practice experience for CKA Mock Exam Questions.
 
 # How to Use
 
