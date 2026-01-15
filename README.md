@@ -1,14 +1,10 @@
 # CKA-PREP
 
-Customized CLI Menu, for practicing CKA Mock Exam Questions.
+Customized CLI Menu, an effort to streamline the practice experience for CKA Mock Exam Questions.
 
 # How to Use
 
-1. Go to Killercoda Playground
-
-```
-https://killercoda.com/playgrounds/scenario/cka
-```
+1. Go to Killercoda Playground ([Link](https://killercoda.com/playgrounds/scenario/cka))
 
 2. Clone this Project in the Playground Terminal
 
@@ -57,6 +53,6 @@ Q17. TLS Config
 - Solution & Explanation: [CKA-PREP/All-Questions.md](https://github.com/d3jia/CKA-PREP/blob/main/All-Questions.md) 
 - Video Explanation: [IT KIddie Playlist](https://www.youtube.com/watch?v=-rs3AoAVyXE&list=PLkDZsCgo3Isr4NB5cmyqG7OZwYEx5XOjM&index=3)
 
-# I'm sure you'll pass, good luck!
+# That's all
 
 [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/d3jia)
