@@ -54,9 +54,9 @@ Q17. TLS Config
 ./validate-all-answer.sh
 ```
 
-- Solution & Explanation: https://github.com/d3jia/CKA-PREP/blob/main/All-Questions.md
-- Youtube Video: https://www.youtube.com/watch?v=-rs3AoAVyXE&list=PLkDZsCgo3Isr4NB5cmyqG7OZwYEx5XOjM&index=3
+- Solution & Explanation: [CKA-PREP/All-Questions.md](https://github.com/d3jia/CKA-PREP/blob/main/All-Questions.md) 
+- Video Explanation: [IT KIddie Playlist](https://www.youtube.com/watch?v=-rs3AoAVyXE&list=PLkDZsCgo3Isr4NB5cmyqG7OZwYEx5XOjM&index=3)
 
----
+# I'm sure you'll pass, good luck!
 
 [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/d3jia)
